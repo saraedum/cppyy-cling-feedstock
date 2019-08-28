@@ -1,7 +1,6 @@
 {% set name = "cppyy-cling" %}
-{% set version = "6.18.2.1" %}
 # The first three items of version define the version of ROOT that we're building from.
-{% set root_version = "6.15.02" %}
+{% set version = "6.18.2.1" %}
 {% set clang_version = "5.0.0" %}
 {% set clang_patches_version = "6.16.00" %}
 
