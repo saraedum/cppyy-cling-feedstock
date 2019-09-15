@@ -12,7 +12,6 @@ source:
   url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz
   sha256: bc86c7d0d8234d21fc9860eaf5176afa313ed28a70a755ae98932397c1701509
   patches:
-  - manylinux.patch
   - cmake_flags.patch
 
 build:
