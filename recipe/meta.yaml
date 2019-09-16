@@ -15,7 +15,7 @@ source:
   - cmake_flags.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
 
 requirements:
@@ -44,6 +44,9 @@ requirements:
 test:
   commands:
     - which rootcling
+    # rootcling without argument fails but it should find all its libraries
+    # (it exits with 134 on macOS otherwise.)
+    - bash -c 'rootcling; [[ $? == 1 ]]'
     - which cppyy-generator
     - which cling-config
     - which genreflex
