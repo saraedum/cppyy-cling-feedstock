@@ -45,7 +45,7 @@ sed -i -E 's#(ROOT_TEST_DRIVER RootTestDriver.cmake PATHS \$\{THISDIR\} \$\{CMAK
 export CMAKE_ROOT_FLAGS=${CMAKE_PLATFORM_FLAGS[@]}
 
 # Some flags that root-feedstock sets. They probably don't hurt when building cppyy (probably much of this is already covered by the -Dminimal=ON that setup.py sets...):
-CMAKE_ROOT_FLAGS="${CMAKE_ROOT_FLAGS} -DCMAKE_INSTALL_RPATH=\"${SP_DIR}/cppyy_backend/lib\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCLING_BUILD_PLUGINS=OFF -DPYTHON_EXECUTABLE=\"${PYTHON}\" -DTBB_ROOT_DIR=\"${PREFIX}\" -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -DCMAKE_CXX_STANDARD=17 -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
+CMAKE_ROOT_FLAGS="${CMAKE_ROOT_FLAGS} -DCMAKE_INSTALL_RPATH=\"${SP_DIR}/cppyy_backend/lib\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_SKIP_BUILD_RPATH=OFF -DCLING_BUILD_PLUGINS=OFF -DPYTHON_EXECUTABLE=\"${PYTHON}\" -DTBB_ROOT_DIR=\"${PREFIX}\" -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -DCMAKE_CXX_STANDARD=17 -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
 # Use conda-forge's clang & llvm
 CMAKE_ROOT_FLAGS="${CMAKE_ROOT_FLAGS} -Dbuiltin_llvm=OFF -Dbuiltin_clang=OFF"
 
