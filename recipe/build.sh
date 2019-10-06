@@ -19,6 +19,7 @@ if [ "$(uname)" == "Linux" ]; then
     CMAKE_PLATFORM_FLAGS+=("-DCLANG_DEFAULT_LINKER=${LD_GOLD}")
     CMAKE_PLATFORM_FLAGS+=("-DDEFAULT_SYSROOT=${PREFIX}/${HOST}/sysroot")
     CMAKE_PLATFORM_FLAGS+=("-DRT_LIBRARY=${PREFIX}/${HOST}/sysroot/usr/lib/librt.so")
+    CMAKE_PLATFORM_FLAGS+=("-DCMAKE_CXX_STANDARD=17")
 
     # Hide symbols from LLVM/clang to avoid conflicts with other libraries
     for lib_name in $(ls $PREFIX/lib | grep -E 'lib(LLVM|clang).*\.a'); do
@@ -28,6 +29,10 @@ if [ "$(uname)" == "Linux" ]; then
 else
     CMAKE_PLATFORM_FLAGS+=("-Dcocoa=ON")
     CMAKE_PLATFORM_FLAGS+=("-DCLANG_RESOURCE_DIR_VERSION='5.0.0'")
+
+    # llvm for macOS was built with C++17 incompatible code so force C++14
+    export CXXFLAGS="$CXXFLAGS -std=c++14"
+    CMAKE_PLATFORM_FLAGS+=("-DCMAKE_CXX_STANDARD=14")
 
     # Print out and possibly fix SDKROOT (Might help Azure)
     echo "SDKROOT is: '${SDKROOT}'"
@@ -39,11 +44,6 @@ fi
 CXXFLAGS=$(echo "${CXXFLAGS}" | sed -E 's@-std=c\+\+[^ ]+@@g')
 export CXXFLAGS
 
-if [ "$(uname)" == "Darwin" ]; then
-    # llvm for macOS was built with C++17 incompatible code so force C++14
-    export CXXFLAGS="$CXXFLAGS -std=c++14"
-fi
-
 # The cross-linux toolchain breaks find_file relative to the current file
 # Patch up with sed
 sed -i -E 's#(ROOT_TEST_DRIVER RootTestDriver.cmake PATHS \$\{THISDIR\} \$\{CMAKE_MODULE_PATH\} NO_DEFAULT_PATH)#\1 CMAKE_FIND_ROOT_PATH_BOTH#g' \
@@ -54,9 +54,9 @@ export CMAKE_CLING_ARGS=${CMAKE_PLATFORM_FLAGS[@]}
 mkdir build
 cd build
 # Some flags that root-feedstock sets. They probably don't hurt when building cppyy…
-export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_PREFIX_PATH=${PREFIX} -DCMAKE_INSTALL_RPATH=${SP_DIR}/cppyy_backend/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_SKIP_BUILD_RPATH=OFF -DCLING_BUILD_PLUGINS=OFF -DTBB_ROOT_DIR=${SP_DIR}/cppyy_backend -DPYTHON_EXECUTABLE=${PYTHON} -DCMAKE_INSTALL_PREFIX=${SP_DIR}/cppyy_backend -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -DCMAKE_CXX_STANDARD=17 -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
+export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_PREFIX_PATH=${PREFIX} -DCMAKE_INSTALL_RPATH=${SP_DIR}/cppyy_backend/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_SKIP_BUILD_RPATH=OFF -DCLING_BUILD_PLUGINS=OFF -DTBB_ROOT_DIR=${SP_DIR}/cppyy_backend -DPYTHON_EXECUTABLE=${PYTHON} -DCMAKE_INSTALL_PREFIX=${SP_DIR}/cppyy_backend -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
 # Variables that cppyy's setup.py usually sets, we might not actually want all of this 
-export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_CXX_STANDARD=17 -DLLVM_ENABLE_TERMINFO=0 -Dminimal=ON -Dasimage=OFF -Droot7=OFF -Dhttp=OFF -Dbuiltin_pcre=ON -Dbuiltin_freetype=OFF -Dbuiltin_zlib=ON -Dbuiltin_xxhash=ON"
+export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DLLVM_ENABLE_TERMINFO=0 -Dminimal=ON -Dasimage=OFF -Droot7=OFF -Dhttp=OFF -Dbuiltin_pcre=ON -Dbuiltin_freetype=OFF -Dbuiltin_zlib=ON -Dbuiltin_xxhash=ON"
 # Use conda-forge's clang & llvm
 export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -Dbuiltin_llvm=OFF -Dbuiltin_clang=OFF"
 
