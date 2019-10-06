@@ -53,7 +53,9 @@ export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_INSTALL_RPATH=\"${SP_DIR}/c
 export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_CXX_STANDARD=${STDCXX} -DLLVM_ENABLE_TERMINFO=0 -Dminimal=ON -Dasimage=OFF -Droot7=OFF -Dhttp=OFF -Dbuiltin_pcre=ON -Dbuiltin_freetype=OFF -Dbuiltin_zlib=ON -Dbuiltin_xxhash=ON"
 # Use conda-forge's clang & llvm
 export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -Dbuiltin_llvm=OFF -Dbuiltin_clang=OFF"
-# Use cmake to build
-unset MAKE
 
-python -m pip install . --no-deps -vv
+mkdir build
+cd build
+cmake $CMAKE_CLING_ARGS ../src
+cmake --build . --target install --config Release
+rm "${SP_DIR}/cppyy_backend/etc/allDict.cxx.pch"
