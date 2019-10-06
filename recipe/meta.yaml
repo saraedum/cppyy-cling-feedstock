@@ -11,15 +11,12 @@ package:
 source:
   url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz
   sha256: eb8a3bc25085a225aebd580753e9367f1b9273e44244d501285191eaf21971af
+  patches:
+    - use-dumb-setup.py.patch
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
-  entry_points:
-    - cling-config = cppyy_backend._cling_config:main
-    - genreflex = cppyy_backend._genreflex:main
-    - rootcling = cppyy_backend._rootcling:main
-    - cppyy-generator = cppyy_backend._cppyy_generator:main
 
 requirements:
   build:
@@ -44,7 +41,7 @@ test:
     # its libraries (it exits with 134 on macOS otherwise.)
     - bash -c "${SP_DIR}"'/cppyy_backend/bin/rootcling; [[ $? == 1 ]]'
     - which cppyy-generator
-    - which cling-config
+    - cling-config --incdir
     - which genreflex
 
 about:
