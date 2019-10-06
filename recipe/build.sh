@@ -39,6 +39,11 @@ fi
 CXXFLAGS=$(echo "${CXXFLAGS}" | sed -E 's@-std=c\+\+[^ ]+@@g')
 export CXXFLAGS
 
+if [ "$(uname)" == "Darwin" ]; then
+    # llvm for macOS was built with C++17 incompatible code so force C++14
+    export CXXFLAGS="$CXXFLAGS -std=c++14"
+fi
+
 # The cross-linux toolchain breaks find_file relative to the current file
 # Patch up with sed
 sed -i -E 's#(ROOT_TEST_DRIVER RootTestDriver.cmake PATHS \$\{THISDIR\} \$\{CMAKE_MODULE_PATH\} NO_DEFAULT_PATH)#\1 CMAKE_FIND_ROOT_PATH_BOTH#g' \
