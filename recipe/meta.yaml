@@ -1,6 +1,6 @@
 {% set name = "cppyy-cling" %}
 # The first three items of version define the version of ROOT that we're building from.
-{% set version = "6.18.2.2" %}
+{% set version = "6.18.2.3" %}
 {% set clang_version = "5.0.0" %}
 {% set clang_patches_version = "6.16.00" %}
 
@@ -10,13 +10,16 @@ package:
 
 source:
   url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz
-  sha256: bc86c7d0d8234d21fc9860eaf5176afa313ed28a70a755ae98932397c1701509
-  patches:
-  - cmake_flags.patch
+  sha256: eb8a3bc25085a225aebd580753e9367f1b9273e44244d501285191eaf21971af
 
 build:
-  number: 1
+  number: 0
   skip: True  # [win]
+  entry_points:
+    - cling-config = cppyy_backend._cling_config:main
+    - genreflex = cppyy_backend._genreflex:main
+    - rootcling = cppyy_backend._rootcling:main
+    - cppyy-generator = cppyy_backend._cppyy_generator:main
 
 requirements:
   build:
@@ -30,23 +33,16 @@ requirements:
     - clangdev ={{ clang_version }}
     - clang_variant * cling_{{ clang_patches_version }}
     - llvmdev ==5
-    # Copied over from conda-forge's cling recipe:
-    # FIXME: The generated allDict.cxx.pch is dependent on version of the C++
-    # headers used As it is shipped in the macOS binaries we have to use the
-    # same one as in the compilers package
-    - libcxx =4  # [osx]
   run:
     - {{ compiler('cxx') }}
     - python
-    # Copied over from conda-forge's cling recipe:
-    - libcxx =4  # [osx]
 
 test:
   commands:
     - which rootcling
-    # rootcling without argument fails but it should find all its libraries
-    # (it exits with 134 on macOS otherwise.)
-    - bash -c 'rootcling; [[ $? == 1 ]]'
+    # calling rootcling directly without argument fails but it should find all
+    # its libraries (it exits with 134 on macOS otherwise.)
+    - bash -c "${SP_DIR}"'/cppyy_backend/bin/rootcling; [[ $? == 1 ]]'
     - which cppyy-generator
     - which cling-config
     - which genreflex
