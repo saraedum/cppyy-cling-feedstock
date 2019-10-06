@@ -4,8 +4,6 @@
 # root-feedstock.
 
 export VERBOSE=1
-# Build a C++17 aware Cling
-export STDCXX=17
 # Do not perform auto-detection of CPU features
 export EXTRA_CLING_ARGS=-O2
 
@@ -47,15 +45,18 @@ sed -i -E 's#(ROOT_TEST_DRIVER RootTestDriver.cmake PATHS \$\{THISDIR\} \$\{CMAK
 
 export CMAKE_CLING_ARGS=${CMAKE_PLATFORM_FLAGS[@]}
 
+mkdir build
+cd build
+# If we set PYTHON_EXECUTABLE to $PYTHON, the build will search for it in
+# `pwd`/$PYTHON so we need to relativize it (why?)
+export CMAKE_CLING_PYTHON=`realpath --relative-to=$(pwd) ${PYTHON}`
 # Some flags that root-feedstock sets. They probably don't hurt when building cppyy…
-export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -CMAKE_PREFIX_PATH=\"${PREFIX}\" -DCMAKE_INSTALL_RPATH=\"${SP_DIR}/cppyy_backend/lib\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_SKIP_BUILD_RPATH=OFF -DCLING_BUILD_PLUGINS=OFF -DPYTHON_EXECUTABLE=\"${PYTHON}\" -DTBB_ROOT_DIR=\"${PREFIX}\" -DPYTHON_EXECUTABLE=\"${PYTHON}\" -DCMAKE_INSTALL_PREFIX=\"${PREFIX}\" -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -DCMAKE_CXX_STANDARD=17 -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
+export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_PREFIX_PATH=\"${PREFIX}\" -DCMAKE_INSTALL_RPATH=\"${SP_DIR}/cppyy_backend/lib\" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON -DCMAKE_SKIP_BUILD_RPATH=OFF -DCLING_BUILD_PLUGINS=OFF -DTBB_ROOT_DIR=\"${PREFIX}\" -DPYTHON_EXECUTABLE=\"${CMAKE_CLING_PYTHON}\" -DCMAKE_INSTALL_PREFIX=\"${PREFIX}\" -Dexplicitlink=ON -Dexceptions=ON -Dfail-on-missing=ON -Dgnuinstall=OFF -Dshared=ON -Dsoversion=ON -Dbuiltin-glew=OFF -Dbuiltin_xrootd=OFF -Dbuiltin_davix=OFF -Dbuiltin_afterimage=OFF -Drpath=ON -DCMAKE_CXX_STANDARD=17 -Dcastor=off -Dgfal=OFF -Dmysql=OFF -Doracle=OFF -Dpgsql=OFF -Dpythia6=OFF -Droottest=OFF"
 # Variables that cppyy's setup.py usually sets, we might not actually want all of this 
-export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_CXX_STANDARD=${STDCXX} -DLLVM_ENABLE_TERMINFO=0 -Dminimal=ON -Dasimage=OFF -Droot7=OFF -Dhttp=OFF -Dbuiltin_pcre=ON -Dbuiltin_freetype=OFF -Dbuiltin_zlib=ON -Dbuiltin_xxhash=ON"
+export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DCMAKE_CXX_STANDARD=17 -DLLVM_ENABLE_TERMINFO=0 -Dminimal=ON -Dasimage=OFF -Droot7=OFF -Dhttp=OFF -Dbuiltin_pcre=ON -Dbuiltin_freetype=OFF -Dbuiltin_zlib=ON -Dbuiltin_xxhash=ON"
 # Use conda-forge's clang & llvm
 export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -Dbuiltin_llvm=OFF -Dbuiltin_clang=OFF"
 
-mkdir build
-cd build
 cmake $CMAKE_CLING_ARGS ../src
 cmake --build . --target install --config Release
 rm "${SP_DIR}/cppyy_backend/etc/allDict.cxx.pch"
