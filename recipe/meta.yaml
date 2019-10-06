@@ -13,6 +13,7 @@ source:
   sha256: eb8a3bc25085a225aebd580753e9367f1b9273e44244d501285191eaf21971af
   patches:
   - cmake_flags.patch
+  - prefix.patch
 
 build:
   number: 0
