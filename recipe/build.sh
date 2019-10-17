@@ -42,6 +42,7 @@ fi
 
 # Remove -std=c++XX from build ${CXXFLAGS}
 CXXFLAGS=$(echo "${CXXFLAGS}" | sed -E 's@-std=c\+\+[^ ]+@@g')
+CXXFLAGS=$(echo "${CXXFLAGS}" | sed -E 's@-isystem @-I@g')
 export CXXFLAGS
 
 # The cross-linux toolchain breaks find_file relative to the current file
