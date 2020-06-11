@@ -2,7 +2,7 @@
 # The first three items of version define the version of ROOT that we're building from.
 {% set version = "6.20.4.1" %}
 {% set clang_version = "5.0.0" %}
-{% set clang_patches_version = "6.16.00" %}
+{% set clang_patches_version = "root_20191220" %}
 
 package:
   name: {{ name }}
@@ -28,7 +28,7 @@ requirements:
     - pip
     - zlib
     - clangdev ={{ clang_version }}
-    - clang_variant * cling_{{ clang_patches_version }}
+    - clang_variant * {{ clang_patches_version }}
     - llvmdev ==5
   run:
     - {{ compiler('cxx') }}
