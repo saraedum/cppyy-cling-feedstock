@@ -1,12 +1,21 @@
+From 80e224710ef90f1b6b8aa13f631ec7624da7f650 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Julian=20R=C3=BCth?= <julian.rueth@fsfe.org>
+Date: Mon, 7 Oct 2019 00:37:03 +0200
+Subject: [PATCH] use dumb setup.py
+
+---
+ setup.py | 331 -------------------------------------------------------
+ 1 file changed, 331 deletions(-)
+
 diff --git a/setup.py b/setup.py
-index 4bea5d7..e469cf5 100755
+index ded848d..691caff 100755
 --- a/setup.py
 +++ b/setup.py
-@@ -1,340 +1,10 @@
+@@ -1,340 +1,12 @@
  import codecs, multiprocessing, os, sys, subprocess, stat
  from setuptools import setup, find_packages
 -from distutils import log
--
+ 
 -from setuptools.dist import Distribution
 -from distutils.command.build import build as _build
 -from distutils.command.clean import clean as _clean
@@ -27,7 +36,7 @@ index 4bea5d7..e469cf5 100755
  with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
      long_description = f.read()
  
--
+ 
 -#
 -# platform-dependent helpers
 -#
@@ -139,8 +148,8 @@ index 4bea5d7..e469cf5 100755
 -            os.putenv('EXTRA_CLING_ARGS', extra_args)
 -
 -        CMAKE_COMMAND = ['cmake', srcdir,
--                stdcxx, '-DLLVM_ENABLE_TERMINFO=0', '-DLLVM_ENABLE_ASSERTIONS=0',
--                '-Dminimal=ON', '-Druntime_cxxmodules=OFF', '-Dasimage=OFF', '-Droot7=OFF', '-Dhttp=OFF',
+-                stdcxx, '-DLLVM_ENABLE_TERMINFO=0',
+-                '-Dminimal=ON', '-Dasimage=OFF', '-Droot7=OFF', '-Dhttp=OFF',
 -                '-Dbuiltin_pcre=ON', '-Dbuiltin_freetype=ON', '-Dbuiltin_zlib=ON', '-Dbuiltin_xxhash=ON']
 -        if 'darwin' in sys.platform:
 -            CMAKE_COMMAND.append('-Dlibcxx=ON')
@@ -343,7 +352,7 @@ index 4bea5d7..e469cf5 100755
  setup(
      name='cppyy-cling',
      description='Re-packaged Cling, as backend for cppyy',
-@@ -383,9 +53,6 @@ setup(
+@@ -383,9 +55,6 @@ setup(
      package_dir={'': 'python'},
      packages=find_packages('python', include=['cppyy_backend']),
  
@@ -353,3 +362,6 @@ index 4bea5d7..e469cf5 100755
      entry_points={
          "console_scripts": [
              "cling-config = cppyy_backend._cling_config:main",
+-- 
+2.23.0
+
