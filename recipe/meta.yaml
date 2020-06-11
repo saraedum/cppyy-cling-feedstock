@@ -23,7 +23,6 @@ requirements:
     - {{ compiler('cxx') }}
     - sed
     - cmake
-    - python
   host:
     - python
     - pip
