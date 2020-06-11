@@ -13,6 +13,7 @@ source:
   sha256: 9b24dfc9866e93b66d52a240c754d3d24570b1d969e1c171113b24b9552db2da
   patches:
     - use-dumb-setup.py.patch
+    - fno-plt.patch
 
 build:
   number: 0
