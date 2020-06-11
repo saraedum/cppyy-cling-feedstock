@@ -63,6 +63,6 @@ pip install . --no-deps -vv
 
 mkdir build
 cd build
-cmake $CMAKE_CLING_ARGS ../src
+cmake $CMAKE_CLING_ARGS -DPython3_EXECUTABLE="$PYTHON" -DPython_EXECUTABLE="$PYTHON" ../src
 cmake --build . --target install --config Release
 rm "${SP_DIR}/cppyy_backend/etc/allDict.cxx.pch"
