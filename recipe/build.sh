@@ -59,7 +59,7 @@ export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -DLLVM_ENABLE_TERMINFO=0 -Dminimal=
 # Use conda-forge's clang & llvm
 export CMAKE_CLING_ARGS="${CMAKE_CLING_ARGS} -Dbuiltin_llvm=OFF -Dbuiltin_clang=OFF"
 
-python -m pip install . --no-deps -vv
+pip install . --no-deps -vv
 
 mkdir build
 cd build
