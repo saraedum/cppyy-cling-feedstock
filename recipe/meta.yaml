@@ -14,6 +14,7 @@ source:
   patches:
     - use-dumb-setup.py.patch
     - fno-plt.patch
+    - cmake.patch
 
 build:
   number: 0

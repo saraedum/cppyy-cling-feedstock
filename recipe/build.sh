@@ -63,6 +63,17 @@ python -m pip install . --no-deps -vv
 
 mkdir build
 cd build
-cmake $CMAKE_CLING_ARGS ../src
+
+if [[ "${python_impl}" == "pypy" ]]; then
+    # CMake 3.17 needs some help to find Python. According to
+    # https://cmake.org/cmake/help/v3.17/module/FindPython.html#module:FindPython,
+    # we're supposed to set Python_LIBRARY but actually, looking at the code,
+    # we need to set PYTHON_LIBRARY. Much of this is changing in cmake 3.18,
+    # so expect this to break again in future upgrades.
+    CMAKE_CLING_ARGS="$CMAKE_CLING_ARGS -DPYTHON_LIBRARY=$PREFIX/lib/libpypy3-c.so"
+fi
+
+cmake $CMAKE_CLING_ARGS \
+  ../src
 cmake --build . --target install --config Release
 rm "${SP_DIR}/cppyy_backend/etc/allDict.cxx.pch"
