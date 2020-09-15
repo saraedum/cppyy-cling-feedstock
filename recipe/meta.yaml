@@ -13,8 +13,6 @@ source:
   sha256: 20c499cee9a48932c3957aba5affcb1bca05206de6b5546ea9f122de8ed8724a
   patches:
     - use-dumb-setup.py.patch
-    - fno-plt.patch
-    - cmake.patch
 
 build:
   number: 0
