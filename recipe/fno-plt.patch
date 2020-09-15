@@ -1,17 +1,17 @@
-From 52c739bc081adcab4e34c6840923d6722e394829 Mon Sep 17 00:00:00 2001
+From ae44496a1d11484a17c76f3646d4b05c0bb6c4d0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Julian=20R=C3=BCth?= <julian.rueth@fsfe.org>
-Date: Thu, 11 Jun 2020 19:46:41 +0200
-Subject: [PATCH] strip fno-plt which rootcling does not understand
+Date: Tue, 15 Sep 2020 22:56:40 +0200
+Subject: [PATCH] filter out fno-plt
 
 ---
  src/etc/dictpch/makepch.py | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/src/etc/dictpch/makepch.py b/src/etc/dictpch/makepch.py
-index ddba7d9..e72221d 100755
+index 9337347..17bfeb3 100755
 --- a/src/etc/dictpch/makepch.py
 +++ b/src/etc/dictpch/makepch.py
-@@ -90,6 +90,9 @@ def makepch():
+@@ -93,6 +93,9 @@ def makepch():
     if "-isystem" in cppFlags:
        idx = cppFlags.index("-isystem")
        del cppFlags[idx: idx+2]
@@ -22,5 +22,5 @@ index ddba7d9..e72221d 100755
     cppflagsList=["-D__CLING__",
                   "-D__STDC_LIMIT_MACROS",
 -- 
-2.27.0
+2.28.0
 
