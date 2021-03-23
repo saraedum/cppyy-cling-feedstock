@@ -1,6 +1,6 @@
 {% set name = "cppyy-cling" %}
 # The first three items of version define the version of ROOT that we're building from.
-{% set version = "6.21.5" %}
+{% set version = "6.21.6" %}
 {% set clang_version = "5.0.0" %}
 {% set clang_patches_version = "root_20191220" %}
 
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz
-  sha256: 1ec8cd204af3cc9290eecc8c40efabb001efd22d6d9624009193cddba550974d
+  sha256: 01e7d45c4e257748c61f265dde75c798d3390cccfae4fe7f28bbb4359b2fbfdc
   patches:
     - use-dumb-setup.py.patch
     - fno-plt.patch
