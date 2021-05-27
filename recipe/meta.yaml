@@ -1,8 +1,6 @@
 {% set name = "cppyy-cling" %}
 # The first three items of version define the version of ROOT that we're building from.
 {% set version = "6.25.0" %}
-{% set clang_version = "5.0.0" %}
-{% set clang_patches_version = "root_20191220" %}
 
 package:
   name: {{ name }}
@@ -28,9 +26,8 @@ requirements:
     - python
     - pip
     - zlib
-    - clangdev ={{ clang_version }}
-    - clang_variant * {{ clang_patches_version }}
-    - llvmdev ==5
+    - clangdev =9.0.1 root_62400*
+    - llvmdev 9
   run:
     - {{ compiler('cxx') }}
     - python
