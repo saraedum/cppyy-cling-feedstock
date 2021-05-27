@@ -28,11 +28,8 @@ if [ "$(uname)" == "Linux" ]; then
     echo "CXXFLAGS is now '${CXXFLAGS}'"
 else
     CMAKE_PLATFORM_FLAGS+=("-Dcocoa=ON")
-    CMAKE_PLATFORM_FLAGS+=("-DCLANG_RESOURCE_DIR_VERSION='5.0.0'")
-
-    # llvm for macOS was built with C++17 incompatible code so force C++14
-    export CXXFLAGS="$CXXFLAGS -std=c++14"
-    CMAKE_PLATFORM_FLAGS+=("-DCMAKE_CXX_STANDARD=14")
+    CMAKE_PLATFORM_FLAGS+=("-DCLANG_RESOURCE_DIR_VERSION='9.0.1'")
+    CMAKE_PLATFORM_FLAGS+=("-DCMAKE_CXX_STANDARD=17")
 
     # Print out and possibly fix SDKROOT (Might help Azure)
     echo "SDKROOT is: '${SDKROOT}'"
