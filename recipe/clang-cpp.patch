@@ -1,25 +1,25 @@
-From 754c56f176e2d459dd8f04f1349442fc98c1dc3e Mon Sep 17 00:00:00 2001
+From 7cabba687402b3b49e0db8c9687c5682c0d17675 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Julian=20R=C3=BCth?= <julian.rueth@fsfe.org>
 Date: Sun, 20 Jun 2021 18:05:30 +0200
 Subject: [PATCH] link against -lclang-cpp
 
 ---
- src/interpreter/CMakeLists.txt | 2 +-
+ src/core/rootcling_stage1/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/interpreter/CMakeLists.txt b/src/interpreter/CMakeLists.txt
-index c7f98b8..897f4c7 100644
---- a/src/interpreter/CMakeLists.txt
-+++ b/src/interpreter/CMakeLists.txt
-@@ -533,7 +533,7 @@ else()
-     set(new_libs ${newer_libs})
-     set(newer_libs "")
-   endwhile()
--  set(CLING_DEPEND_LIBS ${link_libs} CACHE STRING "")
-+  set(CLING_DEPEND_LIBS ${link_libs} clang-cpp CACHE STRING "")
- endif(builtin_cling)
- 
- 
+diff --git a/src/core/rootcling_stage1/CMakeLists.txt b/src/core/rootcling_stage1/CMakeLists.txt
+index 5cc5c9c..ddc1732 100644
+--- a/src/core/rootcling_stage1/CMakeLists.txt
++++ b/src/core/rootcling_stage1/CMakeLists.txt
+@@ -35,7 +35,7 @@ ROOT_EXECUTABLE(rootcling_stage1 src/rootcling_stage1.cxx
+                               $<TARGET_OBJECTS:ClingUtils>
+                               $<TARGET_OBJECTS:Dictgen>
+                               $<TARGET_OBJECTS:Foundation_Stage1>
+-                              LIBRARIES ${CLING_LIBRARIES} ${LINK_LIBS} ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT}
++                              LIBRARIES ${CLING_LIBRARIES} ${LINK_LIBS} -lclang-cpp ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT}
+                               NOINSTALL)
+ set_target_properties(rootcling_stage1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY src)
+ add_dependencies(rootcling_stage1 ClingUtils)
 -- 
 2.32.0
 
