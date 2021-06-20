@@ -1,0 +1,25 @@
+From 754c56f176e2d459dd8f04f1349442fc98c1dc3e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Julian=20R=C3=BCth?= <julian.rueth@fsfe.org>
+Date: Sun, 20 Jun 2021 18:05:30 +0200
+Subject: [PATCH] link against -lclang-cpp
+
+---
+ src/interpreter/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/interpreter/CMakeLists.txt b/src/interpreter/CMakeLists.txt
+index c7f98b8..897f4c7 100644
+--- a/src/interpreter/CMakeLists.txt
++++ b/src/interpreter/CMakeLists.txt
+@@ -533,7 +533,7 @@ else()
+     set(new_libs ${newer_libs})
+     set(newer_libs "")
+   endwhile()
+-  set(CLING_DEPEND_LIBS ${link_libs} CACHE STRING "")
++  set(CLING_DEPEND_LIBS ${link_libs} clang-cpp CACHE STRING "")
+ endif(builtin_cling)
+ 
+ 
+-- 
+2.32.0
+

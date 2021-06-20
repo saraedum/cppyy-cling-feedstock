@@ -13,6 +13,7 @@ source:
     - use-dumb-setup.py.patch
     - llvm.patch
     - cross.patch  # [build_platform != target_platform]
+    - clang-cpp.patch
 
 build:
   number: 0
