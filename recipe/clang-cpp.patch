@@ -1,14 +1,15 @@
-From 7cabba687402b3b49e0db8c9687c5682c0d17675 Mon Sep 17 00:00:00 2001
+From 678020ed3a3462b1cf6f2e29407ac4f6bf003f4f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Julian=20R=C3=BCth?= <julian.rueth@fsfe.org>
 Date: Sun, 20 Jun 2021 18:05:30 +0200
 Subject: [PATCH] link against -lclang-cpp
 
+instead of linking against static libraries
 ---
  src/core/rootcling_stage1/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/rootcling_stage1/CMakeLists.txt b/src/core/rootcling_stage1/CMakeLists.txt
-index 5cc5c9c..ddc1732 100644
+index 5cc5c9c..74ddc0e 100644
 --- a/src/core/rootcling_stage1/CMakeLists.txt
 +++ b/src/core/rootcling_stage1/CMakeLists.txt
 @@ -35,7 +35,7 @@ ROOT_EXECUTABLE(rootcling_stage1 src/rootcling_stage1.cxx
@@ -16,7 +17,7 @@ index 5cc5c9c..ddc1732 100644
                                $<TARGET_OBJECTS:Dictgen>
                                $<TARGET_OBJECTS:Foundation_Stage1>
 -                              LIBRARIES ${CLING_LIBRARIES} ${LINK_LIBS} ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT}
-+                              LIBRARIES ${CLING_LIBRARIES} ${LINK_LIBS} -lclang-cpp ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT}
++                              LIBRARIES ${CLING_LIBRARIES} -lclang-cpp ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT}
                                NOINSTALL)
  set_target_properties(rootcling_stage1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY src)
  add_dependencies(rootcling_stage1 ClingUtils)
