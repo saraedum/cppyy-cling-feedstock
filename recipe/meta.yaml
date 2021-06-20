@@ -18,6 +18,8 @@ source:
 build:
   number: 0
   skip: true  # [win]
+  # cross-python does not support pypy yet
+  skip: true  # [build_platform != target_platform and python_impl == "pypy"]
 
 requirements:
   build:
