@@ -20,8 +20,7 @@ source:
     - thread.patch
 
 build:
-  number: 0
-  skip: true  # [win]
+  number: 1
   # cross-python does not support pypy yet
   skip: true  # [build_platform != target_platform and python_impl == "pypy"]
 
@@ -45,13 +44,13 @@ requirements:
 
 test:
   commands:
-    - which rootcling
+    - which rootcling                                                           # [unix]
     # calling rootcling directly without argument fails but it should find all
     # its libraries (it exits with 134 on macOS otherwise.)
-    - bash -c "${SP_DIR}"'/cppyy_backend/bin/rootcling; [[ $? == 1 ]]'
-    - which cppyy-generator
+    - bash -c "${SP_DIR}"'/cppyy_backend/bin/rootcling; [[ $? == 1 ]]'          # [unix]
+    - which cppyy-generator                                                     # [unix]
     - cling-config --incdir
-    - which genreflex
+    - which genreflex                                                           # [unix]
 
 about:
   home: https://pypi.org/project/cppyy-cling
